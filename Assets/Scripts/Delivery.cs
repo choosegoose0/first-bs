@@ -7,6 +7,13 @@ public class Delivery : MonoBehaviour
 {
     bool hasPackage;
     [SerializeField] float destroyDelay = 0.5f;
+    [SerializeField] Color32 hasPackageColor = new Color32(1,1,1,1);
+    [SerializeField] Color32 hasNoPackageColor = new Color32(1,1,1,1);
+    SpriteRenderer spriteRenderer;
+    void Start()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
     void OnTriggerEnter2D(Collider2D other) 
     {
         if (other.tag == "Package")
@@ -16,6 +23,7 @@ public class Delivery : MonoBehaviour
                 Debug.Log("picked up package");
                 hasPackage = true;
                 Destroy(other.gameObject,destroyDelay);
+                spriteRenderer.color = hasPackageColor;
             } 
             else
             {
@@ -29,6 +37,7 @@ public class Delivery : MonoBehaviour
             {
                 Debug.Log("package delivered");
                 hasPackage = false;
+                spriteRenderer.color = hasNoPackageColor;
             }
             else
             {
